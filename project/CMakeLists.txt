@@ -30,6 +30,7 @@ install(
   FILES
     ${CMAKE_SOURCE_DIR}/project/hellolib/include/hellolib.h
     ${CMAKE_BINARY_DIR}/exports/hellolib_export.h
+    ${CMAKE_BINARY_DIR}/exports/linear_model_export.h
   DESTINATION
     include/hellolib)
 
