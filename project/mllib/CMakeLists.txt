@@ -60,25 +60,15 @@ target_include_directories(${TARGET_NAME}
 
 add_definitions(-DEIGEN_USE_BLAS -DEIGEN_USE_LAPACKE)
 
-# if(BUILD_TESTING)
-#   list(APPEND TEST_CASES
-#     hellolib_test
-#   )
-#   foreach(TEST_CASE ${TEST_CASES})
-#     add_executable(${TEST_CASE} ${CMAKE_CURRENT_SOURCE_DIR}/test/${TEST_CASE}.cpp)
-#     target_link_libraries(${TEST_CASE} PRIVATE ${TARGET_NAME} doctest::doctest)
-#     target_compile_options(${TEST_CASE} PRIVATE ${compiler_options})
-#     target_compile_definitions(${TEST_CASE} PRIVATE ${compiler_definitions} $<$<BOOL:${OPENSSL_FOUND}>:WITH_OPENSSL>)
-#     target_link_options(${TEST_CASE} PRIVATE ${linker_flags})
+#######################
+# Setup the Google Test
+#######################
 
-#     target_include_directories(${TEST_CASE}
-#       PUBLIC
-#         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
-#       PRIVATE
-#         ${TARGET_INCLUDE_FOLDER}
-#         # Any other extra include required
-#     )
-
-#     add_test(NAME ${TEST_CASE} COMMAND ${TEST_CASE})
-#   endforeach(TEST_CASE ${TEST_CASES})
-# endif()
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)

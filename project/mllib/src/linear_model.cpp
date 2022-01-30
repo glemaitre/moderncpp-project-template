@@ -5,12 +5,13 @@
 using namespace mllib;
 using namespace linear_model;
 
-LinearRegression::LinearRegression(bool fit_intercept)
-    : fit_intercept(fit_intercept) {}
+LinearRegression::LinearRegression(const bool fit_intercept,
+                                   const std::string solver)
+    : fit_intercept(fit_intercept), solver(solver) {}
 
 LinearRegression::~LinearRegression() {}
 
 void LinearRegression::fit(const MatrixData &X, const VectorTarget &y) {
-  std::cout << "Start fitting the linear regression..." << std::endl;
-  this->coef_ = (X.transpose() * X).inverse() * X.transpose() * y;
+  if (solver == "normal")
+    this->coef_ = (X.transpose() * X).inverse() * X.transpose() * y;
 }
