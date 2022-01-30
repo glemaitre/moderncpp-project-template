@@ -60,13 +60,41 @@ target_include_directories(${TARGET_NAME}
 
 add_definitions(-DEIGEN_USE_BLAS -DEIGEN_USE_LAPACKE)
 
+#######################
+# Setup the Google Test
+#######################
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+#########################
+# Create binary for tests
+#########################
+
 enable_testing()
 
 add_executable(
   linear_model_test
   ${CMAKE_CURRENT_SOURCE_DIR}/test/linear_model.cpp
 )
-target_link_libraries(linear_model_test PUBLIC mllib Eigen3::Eigen lapack blas)
+
+# include all the necessary directories
+target_include_directories(${TARGET_NAME}
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
+  PRIVATE
+    ${TARGET_INCLUDE_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}./mllib/include
+    # Any other extra include required
+)
+
+target_link_libraries(linear_model_test PUBLIC mllib Eigen3::Eigen lapack blas gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(linear_model_test)
