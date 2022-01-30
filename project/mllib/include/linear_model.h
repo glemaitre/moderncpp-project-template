@@ -1,12 +1,20 @@
+#include <optional>
+
+#include <Eigen/Dense>
+
 #include "mllib_export.h"
 
+namespace mllib {
 namespace linear_model {
-class LINEAR_MODEL_EXPORT LinearRegression {
+class MLLIB_EXPORT LinearRegression {
  public:
   bool fit_intercept;
 
  public:
-  LinearRegression();
-};
+  LinearRegression(const bool fit_intercept = true);
+  ~LinearRegression();
 
+  return fit()
+};
 }  // namespace linear_model
+}  // namespace mllib
