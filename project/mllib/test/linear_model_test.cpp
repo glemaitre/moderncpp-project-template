@@ -29,4 +29,15 @@ std::tuple<MatrixData, VectorTarget> generate_random_data() {
   return {X, y};
 }
 
-TEST(LineaRegression, SmokeTest) { linear_model::LinearRegression lr; }
+TEST(LineaRegression, FitWithIntercept) {
+  auto dataset = generate_random_data();
+  auto X = std::get<0>(dataset);
+  auto y = std::get<1>(dataset);
+
+  linear_model::LinearRegression lr(true);
+  lr.fit(X, y);
+
+  EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
+
+  std::cout << lr.coef_ << std::endl;
+}

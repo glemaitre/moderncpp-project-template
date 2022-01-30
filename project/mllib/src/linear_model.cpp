@@ -12,6 +12,13 @@ LinearRegression::LinearRegression(const bool fit_intercept,
 LinearRegression::~LinearRegression() {}
 
 void LinearRegression::fit(const MatrixData &X, const VectorTarget &y) {
+  auto X_ = X;
+  if (fit_intercept) {
+    // add a dummy column
+    X_.conservativeResize(Eigen::NoChange, X_.cols() + 1);
+    X_.col(X_.cols() - 1).setOnes();
+  }
+
   if (solver == "normal")
-    this->coef_ = (X.transpose() * X).inverse() * X.transpose() * y;
+    this->coef_ = (X_.transpose() * X_).inverse() * X_.transpose() * y;
 }
