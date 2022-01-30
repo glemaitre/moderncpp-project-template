@@ -3,6 +3,7 @@
 
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
 find_package(BLAS)
+find_package(LAPACK)
 
 #####################################
 # Define Target Information
@@ -54,6 +55,7 @@ target_include_directories(${TARGET_NAME}
     # Any other extra include required
     ${EIGEN3_INCLUDE_DIR}
     ${BLAS_INCLUDE_DIRS}
+    ${LAPACK_INCLUDE_DIRS}
 )
 
 add_definitions(-DEIGEN_USE_BLAS -DEIGEN_USE_LAPACKE)
