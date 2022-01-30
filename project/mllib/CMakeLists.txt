@@ -90,7 +90,6 @@ target_include_directories(${TARGET_NAME}
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
   PRIVATE
     ${TARGET_INCLUDE_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}./mllib/include
     # Any other extra include required
 )
 
