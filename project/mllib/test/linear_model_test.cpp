@@ -29,6 +29,17 @@ std::tuple<MatrixData, VectorTarget> generate_random_data() {
   return {X, y};
 }
 
+TEST(LineaRegression, DefaultConstructor) {
+  auto dataset = generate_random_data();
+  auto X = std::get<0>(dataset);
+  auto y = std::get<1>(dataset);
+
+  linear_model::LinearRegression lr;
+  lr.fit(X, y);
+
+  EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
+}
+
 TEST(LineaRegression, FitWithIntercept) {
   auto dataset = generate_random_data();
   auto X = std::get<0>(dataset);
@@ -38,6 +49,15 @@ TEST(LineaRegression, FitWithIntercept) {
   lr.fit(X, y);
 
   EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
+}
 
-  std::cout << lr.coef_ << std::endl;
+TEST(LineaRegression, FitWithoutIntercept) {
+  auto dataset = generate_random_data();
+  auto X = std::get<0>(dataset);
+  auto y = std::get<1>(dataset);
+
+  linear_model::LinearRegression lr(false);
+  lr.fit(X, y);
+
+  EXPECT_EQ(lr.coef_.size(), X.cols());
 }
