@@ -1,4 +1,4 @@
-# MIT License 
+# MIT License
 # Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
 #
 # Main CMake Project file

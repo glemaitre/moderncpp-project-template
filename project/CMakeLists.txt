@@ -1,4 +1,4 @@
-# MIT License 
+# MIT License
 # Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
 #
 # Project-related instructions
@@ -18,8 +18,8 @@ add_subdirectory(helloapp)
 # Define Install Targets
 #####################################
 install(TARGETS
-  hellolib
-  helloapp
+  machine_learning
+  integration_test
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
@@ -27,12 +27,12 @@ install(TARGETS
 )
 
 install(
-  FILES 
-    ${CMAKE_SOURCE_DIR}/project/hellolib/include/hellolib.h 
+  FILES
+    ${CMAKE_SOURCE_DIR}/project/hellolib/include/hellolib.h
     ${CMAKE_BINARY_DIR}/exports/hellolib_export.h
-  DESTINATION 
+  DESTINATION
     include/hellolib)
 
-install(FILES  
+install(FILES
   ${CMAKE_SOURCE_DIR}/LICENSE
 DESTINATION .)
