@@ -12,4 +12,5 @@ LinearRegression::~LinearRegression() {}
 
 void LinearRegression::fit(const MatrixData &X, const VectorTarget &y) {
   std::cout << "Start fitting the linear regression..." << std::endl;
+  this->coef_ = (X.transpose() * X).inverse() * X.transpose() * y;
 }

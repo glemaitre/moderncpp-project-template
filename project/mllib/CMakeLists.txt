@@ -2,6 +2,7 @@
 # Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
 
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
+find_package(BLAS)
 
 #####################################
 # Define Target Information
@@ -52,9 +53,10 @@ target_include_directories(${TARGET_NAME}
     ${TARGET_INCLUDE_FOLDER}
     # Any other extra include required
     ${EIGEN3_INCLUDE_DIR}
+    ${BLAS_INCLUDE_DIRS}
 )
 
-# target_link_libraries(${TARGET_NAME} PUBLIC Eigen3:Eigen)
+add_definitions(-DEIGEN_USE_BLAS -DEIGEN_USE_LAPACKE)
 
 # if(BUILD_TESTING)
 #   list(APPEND TEST_CASES

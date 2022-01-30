@@ -9,6 +9,8 @@ class MLLIB_EXPORT LinearRegression {
  public:
   bool fit_intercept;
 
+  VectorParameter coef_;
+
  public:
   LinearRegression(const bool fit_intercept = true);
   ~LinearRegression();

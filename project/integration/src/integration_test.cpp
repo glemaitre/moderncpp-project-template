@@ -27,6 +27,8 @@ int main() {
   }
 
   linear_model::LinearRegression lr(false);
+  std::cout << lr.coef_ << std::endl;
   lr.fit(X, y);
+  std::cout << lr.coef_ << std::endl;
   return 0;
 }
