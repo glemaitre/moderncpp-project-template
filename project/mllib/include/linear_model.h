@@ -15,10 +15,11 @@ class MLLIB_EXPORT LinearRegression {
 
  public:
   LinearRegression(const bool fit_intercept = true,
-                   const std::string solver = "normal");
+                   const std::string solver = "svd");
   ~LinearRegression();
 
   void fit(const MatrixData &X, const VectorTarget &y);
+  VectorTarget predict(const MatrixData &X);
 };
 }  // namespace linear_model
 }  // namespace mllib
