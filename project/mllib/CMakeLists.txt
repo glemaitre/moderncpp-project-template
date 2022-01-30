@@ -1,6 +1,8 @@
 # MIT License
 # Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
 
+find_package(Eigen3 3.4 REQUIRED NO_MODULE)
+
 #####################################
 # Define Target Information
 #####################################
@@ -22,9 +24,9 @@ else()
   add_library(${TARGET_NAME} STATIC ${TARGET_SOURCES})
 endif()
 
-#####################################
-# Define Target Properties and Optional OpenSSL Dependency
-#####################################
+##########################
+# Define Target Properties
+##########################
 
 # generate an export header to expose symbols when using the library
 generate_export_header(${TARGET_NAME} EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/${TARGET_NAME}_export.h)
@@ -49,7 +51,10 @@ target_include_directories(${TARGET_NAME}
   PRIVATE
     ${TARGET_INCLUDE_FOLDER}
     # Any other extra include required
+    ${EIGEN_INCLUDE_DIRS}
 )
+
+# target_link_libraries(${TARGET_NAME} PUBLIC Eigen3:Eigen)
 
 # if(BUILD_TESTING)
 #   list(APPEND TEST_CASES

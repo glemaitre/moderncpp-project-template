@@ -3,6 +3,7 @@
 #include <Eigen/Dense>
 
 #include "mllib_export.h"
+#include "common.h"
 
 namespace mllib {
 namespace linear_model {
