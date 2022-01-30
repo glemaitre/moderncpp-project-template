@@ -90,8 +90,6 @@ foreach(TEST_CASE ${TEST_CASES})
   target_link_libraries(${TEST_CASE} PRIVATE ${TARGET_NAME} mllib Eigen3::Eigen lapack blas gtest_main)
   target_compile_options(${TEST_CASE} PRIVATE ${compiler_options})
   target_compile_definitions(${TEST_CASE} PRIVATE ${compiler_definitions})
-  target_link_options(${TEST_CASE} PRIVATE ${linker_flags})
-
   target_include_directories(${TEST_CASE}
     PUBLIC
       $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
