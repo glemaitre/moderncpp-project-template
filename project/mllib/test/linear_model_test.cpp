@@ -29,4 +29,4 @@ std::tuple<MatrixData, VectorTarget> generate_random_data() {
   return {X, y};
 }
 
-TEST(LineaRegression, SmokeTest) { linear_model::LinearRegression lr(); }
+TEST(LineaRegression, SmokeTest) { linear_model::LinearRegression lr; }
