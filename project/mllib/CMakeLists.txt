@@ -79,21 +79,27 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(
-  linear_model_test
-  ${CMAKE_CURRENT_SOURCE_DIR}/test/linear_model.cpp
-)
-
-# include all the necessary directories
-target_include_directories(${TARGET_NAME}
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
-  PRIVATE
-    ${TARGET_INCLUDE_FOLDER}
-    # Any other extra include required
-)
-
-target_link_libraries(linear_model_test PUBLIC mllib Eigen3::Eigen lapack blas gtest_main)
-
 include(GoogleTest)
-gtest_discover_tests(linear_model_test)
+
+list(APPEND TEST_CASES
+  linear_model_test
+)
+
+foreach(TEST_CASE ${TEST_CASES})
+  add_executable(${TEST_CASE} ${CMAKE_CURRENT_SOURCE_DIR}/test/${TEST_CASE}.cpp)
+  target_link_libraries(${TEST_CASE} PRIVATE ${TARGET_NAME} mllib Eigen3::Eigen lapack blas gtest_main)
+  target_compile_options(${TEST_CASE} PRIVATE ${compiler_options})
+  target_compile_definitions(${TEST_CASE} PRIVATE ${compiler_definitions})
+  target_link_options(${TEST_CASE} PRIVATE ${linker_flags})
+
+  target_include_directories(${TEST_CASE}
+    PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
+    PRIVATE
+      ${TARGET_INCLUDE_FOLDER}
+      # Any other extra include required
+  )
+
+  add_test(NAME ${TEST_CASE} COMMAND ${TEST_CASE})
+  gtest_discover_tests(${TEST_CASE})
+endforeach(TEST_CASE ${TEST_CASES})
