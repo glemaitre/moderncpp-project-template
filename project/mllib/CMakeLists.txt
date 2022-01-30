@@ -72,3 +72,14 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(
+  linear_model_test
+  ${CMAKE_CURRENT_SOURCE_DIR}/test/linear_model.cpp
+)
+target_link_libraries(linear_model_test PUBLIC mllib Eigen3::Eigen lapack blas)
+
+include(GoogleTest)
+gtest_discover_tests(linear_model_test)
