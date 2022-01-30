@@ -11,15 +11,15 @@ endif()
 #####################################
 # Define Targets
 #####################################
-add_subdirectory(hellolib)
-add_subdirectory(helloapp)
+add_subdirectory(mllib)
+add_subdirectory(integration)
 
 #####################################
 # Define Install Targets
 #####################################
 install(TARGETS
-  machine_learning
-  integration_test
+  mllib
+  integration
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
@@ -28,11 +28,10 @@ install(TARGETS
 
 install(
   FILES
-    ${CMAKE_SOURCE_DIR}/project/hellolib/include/hellolib.h
-    ${CMAKE_BINARY_DIR}/exports/hellolib_export.h
+    ${CMAKE_SOURCE_DIR}/project/mllib/include/linear_model.h
     ${CMAKE_BINARY_DIR}/exports/linear_model_export.h
   DESTINATION
-    include/hellolib)
+    include/mllib)
 
 install(FILES
   ${CMAKE_SOURCE_DIR}/LICENSE
