@@ -51,7 +51,7 @@ target_include_directories(${TARGET_NAME}
   PRIVATE
     ${TARGET_INCLUDE_FOLDER}
     # Any other extra include required
-    ${EIGEN_INCLUDE_DIRS}
+    ${EIGEN3_INCLUDE_DIR}
 )
 
 # target_link_libraries(${TARGET_NAME} PUBLIC Eigen3:Eigen)

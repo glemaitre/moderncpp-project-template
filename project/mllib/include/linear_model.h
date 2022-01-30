@@ -1,7 +1,5 @@
 #include <optional>
 
-#include <Eigen/Dense>
-
 #include "mllib_export.h"
 #include "common.h"
 
@@ -15,7 +13,7 @@ class MLLIB_EXPORT LinearRegression {
   LinearRegression(const bool fit_intercept = true);
   ~LinearRegression();
 
-  return fit()
+  void fit(const MatrixData &X, const VectorTarget &y);
 };
 }  // namespace linear_model
 }  // namespace mllib
