@@ -2,6 +2,8 @@
 # Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
 
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
+find_package(BLAS)
+find_package(LAPACK)
 
 #####################################
 # Define Target Information
@@ -31,4 +33,4 @@ target_include_directories(${TARGET_NAME}
 )
 
 # link against hellolib
-target_link_libraries(${TARGET_NAME} PUBLIC mllib Eigen3::Eigen)
+target_link_libraries(${TARGET_NAME} PUBLIC mllib Eigen3::Eigen lapack blas)
