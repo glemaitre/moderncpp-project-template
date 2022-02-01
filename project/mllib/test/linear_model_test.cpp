@@ -41,98 +41,6 @@ TEST(LineaRegression, DefaultConstructor) {
   EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
 }
 
-TEST(LineaRegression, SolverNormal) {
-  const std::string solver = "normal";
-
-  const int n_samples = 10000, n_features = 50;
-  auto dataset = generate_random_data(n_samples, n_features);
-  auto X = std::get<0>(dataset);
-  auto y = std::get<1>(dataset);
-
-  linear_model::LinearRegression lr(true, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
-
-  auto y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-
-  lr = linear_model::LinearRegression(false, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols());
-
-  y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-}
-
-TEST(LineaRegression, SolverCholesky) {
-  const std::string solver = "cholesky";
-
-  const int n_samples = 10000, n_features = 50;
-  auto dataset = generate_random_data(n_samples, n_features);
-  auto X = std::get<0>(dataset);
-  auto y = std::get<1>(dataset);
-
-  linear_model::LinearRegression lr(true, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
-
-  auto y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-
-  lr = linear_model::LinearRegression(false, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols());
-
-  y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-}
-
-TEST(LineaRegression, SolverSVD) {
-  const std::string solver = "svd";
-
-  const int n_samples = 10000, n_features = 50;
-  auto dataset = generate_random_data(n_samples, n_features);
-  auto X = std::get<0>(dataset);
-  auto y = std::get<1>(dataset);
-
-  linear_model::LinearRegression lr(true, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
-
-  auto y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-
-  lr = linear_model::LinearRegression(false, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols());
-
-  y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-}
-
-TEST(LineaRegression, SolverQR) {
-  const std::string solver = "qr";
-
-  const int n_samples = 10000, n_features = 50;
-  auto dataset = generate_random_data(n_samples, n_features);
-  auto X = std::get<0>(dataset);
-  auto y = std::get<1>(dataset);
-
-  linear_model::LinearRegression lr(true, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
-
-  auto y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-
-  lr = linear_model::LinearRegression(false, solver);
-  lr.fit(X, y);
-  EXPECT_EQ(lr.coef_.size(), X.cols());
-
-  y_pred = lr.predict(X);
-  EXPECT_EQ(y_pred.size(), y.size());
-}
-
 TEST(LineaRegression, UnknownSolver) {
   const std::string solver = "unkown";
 
@@ -143,3 +51,35 @@ TEST(LineaRegression, UnknownSolver) {
   linear_model::LinearRegression lr(true, solver);
   EXPECT_THROW(lr.fit(X, y), std::runtime_error);
 }
+
+class LinearRegressionDefault : public ::testing::TestWithParam<std::string> {
+ protected:
+  linear_model::LinearRegression lr;
+};
+
+TEST_P(LinearRegressionDefault, CheckSingleSolver) {
+  const int n_samples = 10000, n_features = 50;
+  auto dataset = generate_random_data(n_samples, n_features);
+  auto X = std::get<0>(dataset);
+  auto y = std::get<1>(dataset);
+
+  const std::string solver = GetParam();
+  lr.solver = solver;
+
+  lr.fit_intercept = true;
+  lr.fit(X, y);
+  EXPECT_EQ(lr.coef_.size(), X.cols() + 1);
+
+  auto y_pred = lr.predict(X);
+  EXPECT_EQ(y_pred.size(), y.size());
+
+  lr.fit_intercept = false;
+  lr.fit(X, y);
+  EXPECT_EQ(lr.coef_.size(), X.cols());
+
+  y_pred = lr.predict(X);
+  EXPECT_EQ(y_pred.size(), y.size());
+}
+
+INSTANTIATE_TEST_CASE_P(LinearRegressionSolvers, LinearRegressionDefault,
+                        ::testing::Values("normal", "cholesky", "svd", "qr"));
